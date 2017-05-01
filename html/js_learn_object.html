@@ -1,0 +1,74 @@
+<<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js学习2</title>
+</head>
+<body>
+<div style="text-align: center;width: 100%;font-size: 32px">JS学习 （2）</div>
+</body>
+<script type="text/javascript">
+    var a = {
+        xiaoming: 10,
+        xiaofang: 20
+    };
+    var book = {
+        name: 'frontend',
+        published: '1990',
+        author: {
+            firstname: 'tan',
+            lastname: 'shengfang'
+        }
+    }
+    function Hero() {
+        this.occupation = "Ninja";
+    }
+    var hero = new Hero();
+    hero.occupation;
+
+    function Hero(name) {
+        this.name = name;
+        this.occupation = "Ninja";
+        this.WhoAreU = function () {
+            return "I'm " + this.name + " I'm a " + this.occupation;
+        }
+    }
+
+    var h1 = new Hero("zef");
+    console.log(h1.WhoAreU());
+    var h = Hero("tanshengfang");
+    console.log(typeof h);
+
+    var h2 = new h1.constructor("xiaoming");
+    console.log(h2.name);
+
+    var o = {};
+    var c = o.constructor;
+    console.log(c);
+    console.log(typeof c);
+
+    //构造器的一般用法
+    function C() {
+        this.fname = "tan";
+    }
+    var a = new C();
+    console.log(a);
+    console.log(a.fname);
+    console.log(typeof a.fname);
+
+
+    //改变构造器的一般用法
+    function Const() {
+        this.fname = "tan";
+        return {
+            age: 19
+        }
+    }
+    var b = new Const();
+    console.log(typeof b.fname);
+    console.log(b);
+    console.log( b.age);
+
+
+</script>
+</html>

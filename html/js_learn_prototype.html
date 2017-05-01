@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js学习(原型)</title>
+</head>
+<body>
+<div style="text-align: center;width: 100%;font-size: 32px">JS学习 （原型）</div>
+</body>
+<script type="text/javascript">
+
+    function foo(a, b) {
+        return a * b;
+    }
+    foo.length;
+    console.log(foo.length);   //2
+    foo.constructor;
+    console.log(foo.constructor);    //  function Function()
+
+
+    function Gadget(name, color) {
+        this.name = name;
+        this.color = color;
+        this.WhatAreYou = function () {
+            return 'I am a ' + this.color + ' ' + this.name;
+        }
+        Gadget.prototype.price = 100;
+        Gadget.prototype.rating = 3;
+        Gadget.prototype.getInfo = function () {
+            return "Rating:" + this.rating + ",Price:" + this.price;
+        }
+        Gadget.prototype.get = function (what) {
+            return this[what];
+        }
+    }
+    var newToy = new Gadget('小明', 'blue');
+    newToy.name;
+    console.log(newToy.name);
+    console.log(newToy.color);
+    newToy.WhatAreYou();
+    newToy.getInfo();
+    newToy.get('price');
+    newToy.get('rating');
+    newToy.constructor;  //  Gadget(name,color);
+
+    newToy.constructor.prototype.rating;
+    console.log(newToy.constructor.prototype.rating);
+
+    newToy.constructor.prototype.constructor;
+
+    newToy.toString();
+    
+    function Pretty(name) {
+        this.name = name ;
+    }
+    Pretty.prototype.name = "pig" ;
+
+    var girl = new Pretty("heyue");
+    console.log(girl.name);
+
+    function Lovely(name) {
+        this.name = name;
+    }
+    Lovely.prototype.name = "foo";
+
+    var kid = new Lovely("happy");
+    kid.name;  //"happy"
+
+    delete kid.name;
+    kid.name; //foo
+
+    kid.name = "xiaoming";
+    kid.name ;  // "小明"
+
+    var o = {
+        p1: "d",
+        p2: 2
+    }
+    for( i in o) {
+        console.log(i + "=" + o[i]);
+    }
+
+    function Beauty(name, color) {
+        this.name = name;
+        this.color = color;
+        this.someMethod = function () {
+            return 1;
+        }
+        Beauty.prototype.price = 100;
+        Beauty.prototype.rating = 3;
+
+    }
+    var subutil = new Beauty('xiaohong','pink');
+
+    for (var prop in subutil) {
+        console.log(prop + '=' + subutil[prop])
+    }
+
+    for (var prop in subutil) {
+        if (subutil.hasOwnProperty(prop)){
+            console.log("该对象的自身属性属性包含 " + prop + "，该属性的值是 " + subutil[prop])
+        }
+    }
+
+    subutil.propertyIsEnumerable('name');  //true
+    subutil.propertyIsEnumerable('constructor');  //false
+    subutil.propertyIsEnumerable('price');  //false
+    subutil.constructor.prototype.propertyIsEnumerable('price'); // true
+
+    //isPrototypeOf()方法的使用
+    var monkey = {
+        hair: true,
+        feeds: 'bananas',
+        breathes: 'air'
+    };
+
+    function Human(name) {
+        this.name = name ;
+    }
+    Human.prototype = monkey ;
+    var george = new Human('George');
+    monkey.isPrototypeOf(george);  //true
+
+    // _proto_链接
+
+    var developer = new Human();
+    developer.feeds = 'pizza';
+    developer.hacks = 'JavaScript';
+
+    developer.breathes  // 'air'
+
+    developer.constructor = 'junk';
+    typeof developer.constructor.prototype;  //  'undefined'
+
+    developer.__proto__ ;  //monkey这个Object
+
+    // 扩展内建对象
+
+    Array.prototype.inArrry = function (needle) {
+        for(var i = 0, len = this.length;i < len; i++){
+            if (this[i] === needle){
+                return true;
+            }
+            return false;
+        }
+    }
+
+    var a = ['red','green','blue'] ;
+    a.inArrry('red');  //true
+    a.inArrry('yellow');  // false
+
+    //字符反转功能实现
+
+    String.prototype.reverse = function () {
+        return Array.prototype.reverse.apply(this.split('')).join('');
+    }
+
+    var a = "KUILE";
+    a.reverse();  //  'ELIUK'
+
+
+    //实现某个方法时检测是否有现成的方法
+
+    if (!String.prototype.reverse){
+        String.prototype.reverse = function () {
+            return Array.prototype.reverse.apply(this.split('')).join('');
+        }
+    }
+
+    if (typeof somevar !== "undefined"){result = 'yes';}
+
+
+
+</script>
+</html>
